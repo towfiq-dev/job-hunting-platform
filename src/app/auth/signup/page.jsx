@@ -5,10 +5,43 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { GrGoogle } from 'react-icons/gr';
 import { User, Mail, Image as ImageIcon, Lock } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { authClient } from '@/lib/auth-client';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+
+  const onSubmit = async(data) => {
+  const {name, url, email, password} = data
+  const { data:res, error } = await authClient.signUp.email({
+    name: name, 
+    email: email, 
+    password: password,
+    image: url,
+});
+
+  if (res) {
+    toast.success('You are successfully Signup')
+    router.push('/auth/signin')
+  }else if (error){
+    toast.error('Something went wrong')
+  }
+  }
   
+  const googleSignIn = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+  };
+
   return (
     <div className="min-h-screen md:mt-25 flex justify-center items-center px-4 py-10">
       <div className="w-full max-w-[620px]">
@@ -25,7 +58,7 @@ const SignUpPage = () => {
           {/* Form Area */}
           <div className="p-8 md:p-12">
             <form className="space-y-5" 
-            
+            onSubmit={handleSubmit(onSubmit)}
             >
               {/* fullName */}
               <div>
@@ -41,10 +74,10 @@ const SignUpPage = () => {
                     type="text"
                     placeholder="Enter your full name"
                     className={'w-full bg-gray-50 border rounded-2xl py-4 pl-12 pr-4 outline-none transition-all focus:ring-4'}
-                    
+                    {...register("name", { required: true })}
                   />
                 </div>
-                
+                {errors.email && <span className='text-red-500'>This field is required</span>}
               </div>
 
               {/* Photo URL */}
@@ -61,10 +94,10 @@ const SignUpPage = () => {
                     type="text"
                     placeholder="Enter your photo URL"
                     className={'w-full bg-gray-50 border rounded-2xl py-4 pl-12 pr-4 outline-none transition-all focus:ring-4'}
-                  
+                    {...register("url", { required: true })}
                   />
                 </div>
-                
+                {errors.url && <span className='text-red-500'>This field is required</span>}
               </div>
 
               {/* Email */}
@@ -81,10 +114,10 @@ const SignUpPage = () => {
                     type="email"
                     placeholder="Enter your email address"
                     className={'w-full bg-gray-50 border rounded-2xl py-4 pl-12 pr-4 outline-none transition-all focus:ring-4'}
-                  
+                    {...register("email", { required: true })}
                   />
                 </div>
-                
+                {errors.email && <span className='text-red-500'>This field is required</span>}
               </div>
 
               {/* Password */}
@@ -118,7 +151,7 @@ const SignUpPage = () => {
                     //       'Password must contain at least one number.',
                     //   },
                     // })}
-                    
+                    {...register("password", { required: true })}
                     className={'w-full bg-gray-50 border rounded-2xl py-4 pl-12 pr-12 outline-none transition-all focus:ring-4'}
                   />
                   <span
@@ -128,7 +161,7 @@ const SignUpPage = () => {
                     {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
                   </span>
                 </div>
-                
+                {errors.password && <span className='text-red-500'>This field is required</span>}
               </div>
 
               {/* Terms */}
@@ -138,7 +171,7 @@ const SignUpPage = () => {
                     type="checkbox"
                     id="terms"
                     className="w-4 h-4 cursor-pointer accent-cyan-500"
-                  
+                    {...register("terms", { required: true })}
                   />
                   <label
                     htmlFor="terms"
@@ -150,7 +183,7 @@ const SignUpPage = () => {
                     </span>
                   </label>
                 </div>
-                
+                {errors.terms && <span className='text-red-500'>This field is required</span>}
               </div>
 
               {/* Button */}
@@ -174,7 +207,8 @@ const SignUpPage = () => {
             </div>
 
             {/* Google Button */}
-            <button
+            <button 
+              onClick={googleSignIn}
               className="w-full border border-gray-200 bg-white hover:bg-gray-50 py-4 rounded-2xl flex items-center justify-center gap-3 text-[17px] font-semibold text-gray-700 transition-all cursor-pointer"
             >
               <GrGoogle className="text-xl" />

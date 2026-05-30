@@ -1,5 +1,8 @@
 /** @type {import('next').Next} */
 const nextConfig = {
+    experimental: {
+    serverComponentsExternalPackages: ['@better-auth/kysely-adapter'],
+  },
   images: {
     remotePatterns: [
       {
@@ -9,6 +12,10 @@ const nextConfig = {
         pathname: '**',
         search: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.pexels.com',
+      }
     ],
   },
 };

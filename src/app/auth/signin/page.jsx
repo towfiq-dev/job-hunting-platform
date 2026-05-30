@@ -4,9 +4,40 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { GrGoogle } from 'react-icons/gr';
 import { Mail, Lock } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { authClient } from '@/lib/auth-client';
+import { toast } from 'react-toastify';
 
 const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm()
+
+  const onSubmit = async(data) => {
+    const {email, password} = data
+    const { data:res, error } = await authClient.signUp.email({
+      email: email, 
+      password: password,
+      callbackUrl: "/"
+  });
+  
+    if (res) {
+      toast.success('You are successfully Signup')
+    }else if (error){
+      toast.error('Something went wrong')
+    }
+    }
+
+const googleSignIn = async () => {
+  const data = await authClient.signIn.social({
+    provider: "google",
+  });
+};
 
   return (
     <div className="min-h-screen mt-25 flex justify-center items-center px-4 py-10">
@@ -24,7 +55,7 @@ const SignInPage = () => {
           {/* Form Area */}
           <div className="p-8 md:p-12">
             <form className="space-y-5" 
-            
+            onSubmit={handleSubmit(onSubmit)}
             >
               {/* Email */}
               <div>
@@ -40,9 +71,10 @@ const SignInPage = () => {
                     type="email"
                     placeholder="Enter your email address"
                     className={'w-full bg-gray-50 border rounded-2xl py-4 pl-12 pr-4 outline-none transition-all focus:ring-4'}
+                    {...register("email", { required: true })}
                   />
                 </div>
-                
+                {errors.email && <span className='text-red-500'>This field is required</span>}
               </div>
 
               {/* Password */}
@@ -77,7 +109,7 @@ const SignInPage = () => {
                     //   },
                     // })}
                     className={'w-full bg-gray-50 border rounded-2xl py-4 pl-12 pr-12 outline-none transition-all focus:ring-4'}
-                    
+                    {...register("password", { required: true })}
                   />
                   <span
                     onClick={() => setShowPassword(!showPassword)}
@@ -86,7 +118,7 @@ const SignInPage = () => {
                     {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
                   </span>
                 </div>
-                
+                {errors.password && <span className='text-red-500'>This field is required</span>}
               </div>
 
               {/* Remember & Forgot */}
@@ -128,7 +160,8 @@ const SignInPage = () => {
             </div>
 
             {/* Google Button */}
-            <button
+            <button 
+              onClick={googleSignIn}
               className="w-full border border-gray-200 bg-white hover:bg-gray-50 py-4 rounded-2xl flex items-center justify-center gap-3 text-[17px] font-semibold text-gray-700 transition-all cursor-pointer"
             >
               <GrGoogle className="text-xl" />
