@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@heroui/react";
 import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import Image from "next/image";
 
 const navLinks = [
   {
@@ -26,20 +27,22 @@ const navLinks = [
   },
 ];
 
-const  Navbar = () => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data: session } = authClient.useSession()
-  
-  const user = session?.user
-  
-  const handleSignOut = async()=>{
-    await authClient.signOut()
-  }
+  const pathname = usePathname();
+
+  const { data: session } = authClient.useSession();
+
+  const user = session?.user;
+
+  const handleSignOut = async () => {
+    await authClient.signOut();
+  };
 
   return (
-    <header className="sticky top-0 z-50 w-full px-4 md:px-6 lg:px-8 py-4">
-      <div className="mx-auto max-w-7xl">
+    <header className="sticky top-0 z-50 w-full px-3 sm:px-4 md:px-6 lg:px-8 py-3">
+      <div className="mx-auto max-w-310">
         <nav
           className="
             flex items-center justify-between
@@ -72,115 +75,130 @@ const  Navbar = () => {
             </div>
 
             <div>
-              <h2 className="text-white font-bold text-lg leading-none">
+              <h2 className="text-white font-bold text-base sm:text-lg leading-none">
                 Programming
               </h2>
-              <p className="text-gray-400 text-sm">Hero</p>
+
+              <p className="text-gray-400 text-xs sm:text-sm">
+                Hero
+              </p>
             </div>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center gap-8">
+          {/* Desktop Nav */}
+          <div className="hidden xl:flex items-center gap-8">
             {navLinks.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="
-                  text-gray-300
-                  hover:text-white
-                  transition-all
-                  duration-300
-                  text-sm
-                  font-medium
-                "
+                className={`text-sm font-medium transition-all duration-300 ${
+                  pathname === item.href
+                    ? "text-violet-400"
+                    : "text-gray-300 hover:text-white"
+                }`}
               >
                 {item.name}
               </Link>
             ))}
           </div>
 
-          {/* Desktop Action */}
-          <div className="hidden lg:flex items-center gap-4">
-            {
-              user? 
-              <div className="flex items-center gap-4">
-              <Image src={user?.image} alt="UserImg" width={200} height={200} className="w-13 h-13 rounded-full"/>
-              <Link
-              href="/auth/signin"
-              className="
-                bg-red-500
-                py-2
-                px-3
-                rounded-xl
-                hover:text-violet-300
-                font-medium
-                transition
-              "
-              onClick={handleSignOut}
-            >
-              Sign Out
-            </Link>
-              </div>
-              :
-              <div>
-              <Link
-              href="/auth/signin"
-              className="
-                text-violet-400
-                hover:text-violet-300
-                font-medium
-                transition
-              "
-            >
-              Sign In
-            </Link>
-              </div>
-            }
-            <Button
-              radius="md"
-              size="lg"
-              className="
-                bg-white
-                text-black
-                font-semibold
-                px-6
-              "
-            >
-              Get Started
-            </Button>
+          {/* Desktop User Section */}
+          <div className="hidden xl:flex items-center gap-4">
+            {user ? (
+              <>
+                <div className="flex items-center gap-3">
+                  <Image
+                    src={user?.image || "/avatar.png"}
+                    alt={user?.name || "User"}
+                    width={44}
+                    height={44}
+                    className="h-11 w-11 rounded-full border border-violet-500 object-cover"
+                  />
+
+                  <div className="max-w-[150px]">
+                    <p className="truncate text-sm font-semibold text-white">
+                      {user?.name}
+                    </p>
+
+                    <p className="truncate text-xs text-gray-400">
+                      {user?.email}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleSignOut}
+                  className="
+                    rounded-xl
+                    bg-red-500
+                    px-4
+                    py-2
+                    text-sm
+                    font-medium
+                    text-white
+                    transition
+                    hover:bg-red-600
+                  "
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/auth/signin"
+                  className="
+                    text-violet-400
+                    hover:text-violet-300
+                    font-medium
+                    transition
+                  "
+                >
+                  Sign In
+                </Link>
+
+                <Button
+                  radius="md"
+                  size="lg"
+                  className="
+                    bg-white
+                    text-black
+                    font-semibold
+                  "
+                >
+                  Get Started
+                </Button>
+              </>
+            )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="
-              lg:hidden
-              text-white
-              p-2
+              xl:hidden
               rounded-lg
+              p-2
+              text-white
               hover:bg-white/10
               transition
             "
           >
-            {isOpen ? (
-              <X size={24} />
-            ) : (
-              <Menu size={24} />
-            )}
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </nav>
 
         {/* Mobile Menu */}
         <div
           className={`
-            lg:hidden
+            xl:hidden
             overflow-hidden
             transition-all
             duration-300
             ease-in-out
             ${
               isOpen
-                ? "max-h-[500px] opacity-100 mt-3"
+                ? "max-h-[700px] opacity-100 mt-3"
                 : "max-h-0 opacity-0"
             }
           `}
@@ -194,78 +212,101 @@ const  Navbar = () => {
               p-5
             "
           >
-            <div className="flex flex-col gap-5">
+            {/* User Info */}
+            {user && (
+              <div className="mb-5 flex items-center gap-3 border-b border-white/10 pb-5">
+                <Image
+                  src={user?.image || "/avatar.png"}
+                  alt={user?.name || "User"}
+                  width={50}
+                  height={50}
+                  className="h-12 w-12 rounded-full object-cover"
+                />
+
+                <div className="overflow-hidden">
+                  <p className="truncate font-semibold text-white">
+                    {user?.name}
+                  </p>
+
+                  <p className="truncate text-sm text-gray-400">
+                    {user?.email}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Nav Links */}
+            <div className="flex flex-col gap-4">
               {navLinks.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="
-                    text-gray-300
-                    hover:text-white
-                    transition
-                  "
+                  className={`font-medium transition ${
+                    pathname === item.href
+                      ? "text-violet-400"
+                      : "text-gray-300 hover:text-white"
+                  }`}
                 >
                   {item.name}
                 </Link>
               ))}
             </div>
 
-            <div className="mt-6 flex flex-col gap-3">
-              {
-              user? 
-              <div className="flex items-center justify-between">
-              <Image src={user?.image} alt="UserImg" width={200} height={200} className="w-13 h-13 rounded-full"/>
-              <Link
-              href="/auth/signin"
-              className="
-                bg-red-500
-                py-2
-                px-3
-                rounded-xl
-                hover:text-violet-300
-                font-medium
-                transition
-              "
-              onClick={handleSignOut}
-            >
-              Sign Out
-            </Link>
-              </div>
-              :
-              <div>
-              <Link
-              href="/auth/signin"
-              className="
-                text-violet-400
-                hover:text-violet-300
-                font-medium
-                transition
-              "
-            >
-              Sign In
-            </Link>
-              </div>
-            }
+            {/* Auth Section */}
+            <div className="mt-6">
+              {user ? (
+                <button
+                  onClick={handleSignOut}
+                  className="
+                    w-full
+                    rounded-xl
+                    bg-red-500
+                    py-3
+                    text-white
+                    font-medium
+                    transition
+                    hover:bg-red-600
+                  "
+                >
+                  Sign Out
+                </button>
+              ) : (
+                <div className="flex flex-col gap-3">
+                  <Link
+                    href="/auth/signin"
+                    className="
+                      text-center
+                      rounded-xl
+                      border
+                      border-violet-500
+                      py-3
+                      text-violet-400
+                    "
+                  >
+                    Sign In
+                  </Link>
 
-              <Button
-                size="lg"
-                radius="md"
-                className="
-                  w-full
-                  bg-white
-                  text-black
-                  font-semibold
-                "
-              >
-                Get Started
-              </Button>
+                  <Button
+                    size="lg"
+                    radius="md"
+                    className="
+                      w-full
+                      bg-white
+                      text-black
+                      font-semibold
+                    "
+                  >
+                    Get Started
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
     </header>
   );
-}
+};
 
 export default Navbar;
