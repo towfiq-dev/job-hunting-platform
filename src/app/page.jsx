@@ -1,10 +1,12 @@
 import Banner from '@/components/homePage/banner/Banner';
+import StatsSection from '@/components/homePage/stateSection/StateSection';
 import React from 'react';
 
 const Home = () => {
   return (
-    <div className="">
+    <div>
     <Banner/>
+    <StatsSection/>
     </div>
   );
 };
