@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@heroui/react";
 import { Menu, X } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 
 const navLinks = [
   {
@@ -26,6 +28,14 @@ const navLinks = [
 
 const  Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const { data: session } = authClient.useSession()
+  
+  const user = session?.user
+  
+  const handleSignOut = async()=>{
+    await authClient.signOut()
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full px-4 md:px-6 lg:px-8 py-4">
@@ -91,7 +101,29 @@ const  Navbar = () => {
 
           {/* Desktop Action */}
           <div className="hidden lg:flex items-center gap-4">
-            <Link
+            {
+              user? 
+              <div className="flex items-center gap-4">
+              <Image src={user?.image} alt="UserImg" width={200} height={200} className="w-13 h-13 rounded-full"/>
+              <Link
+              href="/auth/signin"
+              className="
+                bg-red-500
+                py-2
+                px-3
+                rounded-xl
+                hover:text-violet-300
+                font-medium
+                transition
+              "
+              onClick={handleSignOut}
+            >
+              Sign Out
+            </Link>
+              </div>
+              :
+              <div>
+              <Link
               href="/auth/signin"
               className="
                 text-violet-400
@@ -102,7 +134,8 @@ const  Navbar = () => {
             >
               Sign In
             </Link>
-
+              </div>
+            }
             <Button
               radius="md"
               size="lg"
@@ -179,16 +212,41 @@ const  Navbar = () => {
             </div>
 
             <div className="mt-6 flex flex-col gap-3">
+              {
+              user? 
+              <div className="flex items-center justify-between">
+              <Image src={user?.image} alt="UserImg" width={200} height={200} className="w-13 h-13 rounded-full"/>
               <Link
-                href="/login"
-                className="
-                  text-center
-                  text-violet-400
-                  font-medium
-                "
-              >
-                Sign In
-              </Link>
+              href="/auth/signin"
+              className="
+                bg-red-500
+                py-2
+                px-3
+                rounded-xl
+                hover:text-violet-300
+                font-medium
+                transition
+              "
+              onClick={handleSignOut}
+            >
+              Sign Out
+            </Link>
+              </div>
+              :
+              <div>
+              <Link
+              href="/auth/signin"
+              className="
+                text-violet-400
+                hover:text-violet-300
+                font-medium
+                transition
+              "
+            >
+              Sign In
+            </Link>
+              </div>
+            }
 
               <Button
                 size="lg"

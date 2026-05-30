@@ -14,7 +14,6 @@ const SignInPage = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm()
 
