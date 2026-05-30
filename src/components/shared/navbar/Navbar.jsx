@@ -7,6 +7,10 @@ import { Menu, X } from "lucide-react";
 
 const navLinks = [
   {
+    name: "Home",
+    href: "/",
+  },
+  {
     name: "Browse Jobs",
     href: "/allRoute/browseJobs",
   },
