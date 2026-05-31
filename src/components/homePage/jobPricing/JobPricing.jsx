@@ -24,7 +24,7 @@ const JobPricing = ()=> {
       <div className="flex bg-[#16161C] p-1 rounded-full mb-16 items-center border border-neutral-800">
         <button
           onClick={() => setIsYearly(false)}
-          className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
+          className={`px-4 py-1.5 text-sm cursor-pointer font-medium rounded-full transition-all ${
             !isYearly ? "bg-white text-black font-semibold" : "text-neutral-400"
           }`}
         >
@@ -32,7 +32,7 @@ const JobPricing = ()=> {
         </button>
         <button
           onClick={() => setIsYearly(true)}
-          className={`px-4 py-1.5 text-sm font-medium rounded-full flex items-center gap-2 transition-all ${
+          className={`px-4 py-1.5 cursor-pointer text-sm font-medium rounded-full flex items-center gap-2 transition-all ${
             isYearly ? "bg-white text-black font-semibold" : "text-neutral-400"
           }`}
         >

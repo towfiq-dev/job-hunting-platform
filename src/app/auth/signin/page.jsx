@@ -19,10 +19,10 @@ const SignInPage = () => {
 
   const onSubmit = async(data) => {
     const {email, password} = data
-    const { data:res, error } = await authClient.signUp.email({
+    const { data:res, error } = await authClient.signIn.email({
       email: email, 
       password: password,
-      callbackUrl: "/"
+      callbackURL: "/"
   });
   
     if (res) {

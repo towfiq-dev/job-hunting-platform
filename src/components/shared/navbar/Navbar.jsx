@@ -127,6 +127,7 @@ const Navbar = () => {
                     text-white
                     transition
                     hover:bg-red-600
+                    cursor-pointer
                   "
                 >
                   Sign Out
