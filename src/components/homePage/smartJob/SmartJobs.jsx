@@ -1,7 +1,8 @@
+'use client'
 import React from "react";
-import { Button } from "@heroui/react";
 import Link from "next/link";
 import SmartJob from "./SmartJob";
+import { motion } from "motion/react"
 
 const jobsData = [
   {
@@ -82,11 +83,14 @@ const JobDiscovery=()=> {
       </div>
 
       <Link href={'/allRoute/browseJobs'}>
-      <Button 
-        className="bg-white text-black font-semibold px-8 py-6 rounded-xl text-sm hover:bg-neutral-200 transition-all shadow-lg shadow-white/5 relative z-10"
+      <motion.button 
+        className="bg-white text-black font-semibold px-8 py-4 cursor-pointer rounded-xl text-sm hover:bg-neutral-200 transition-all shadow-lg shadow-white/5 relative z-10"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        onHoverStart={() => console.log('hover started!')}
       >
         View all job open
-      </Button>
+      </motion.button>
       </Link>
 
     </section>

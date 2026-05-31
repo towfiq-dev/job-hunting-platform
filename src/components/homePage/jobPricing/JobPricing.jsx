@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Button, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 import { Plus, ArrowRight, Crown, BarChart3, Zap } from "lucide-react";
-
+import { motion } from "motion/react"
 const JobPricing = ()=> {
   const [isYearly, setIsYearly] = useState(false);
 
@@ -80,7 +80,12 @@ const JobPricing = ()=> {
         </Card>
 
         {/* Growth Plan (Highlighted) */}
-        <Card className="bg-[#0F0F14] border-2 border-neutral-700/50 rounded-3xl p-6 flex flex-col justify-between shadow-2xl relative">
+        <motion.div 
+        className="bg-[#0F0F14] border-2 border-neutral-700/50 rounded-3xl p-6 flex flex-col justify-between shadow-2xl relative"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        onHoverStart={() => console.log('hover started!')}
+        >
           <CardHeader className="flex justify-between items-center p-0 mb-6">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-neutral-900 rounded-lg border border-neutral-800">
@@ -110,7 +115,7 @@ const JobPricing = ()=> {
               <ArrowRight className="w-4 h-4" />
             </Button>
           </CardFooter>
-        </Card>
+        </motion.div>
 
         {/* Premium Plan */}
         <Card className="bg-[#0A0A0C] border border-neutral-800/60 rounded-3xl p-6 flex flex-col justify-between">

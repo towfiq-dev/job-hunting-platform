@@ -8,7 +8,7 @@ import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
-
+import Logo from "@/assets/images/dream.png";
 const navLinks = [
   {
     name: "Home",
@@ -58,34 +58,21 @@ const Navbar = () => {
           "
         >
           {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-3 shrink-0"
-          >
-            <div
-              className="
-                flex h-10 w-10 items-center justify-center
-                rounded-xl
-                bg-gradient-to-r
-                from-violet-600
-                to-fuchsia-500
-                text-white
-                font-bold
-              "
-            >
-              PH
-            </div>
-
-            <div>
-              <h2 className="text-white font-bold text-base sm:text-lg leading-none">
-                Programming
-              </h2>
-
-              <p className="text-gray-400 text-xs sm:text-sm">
-                Hero
-              </p>
-            </div>
-          </Link>
+<Link
+  href="/"
+  className="flex items-center gap-3 shrink-0"
+>
+  {/* Logo */}
+  <div className="relative h-10 w-30 md:h-12 md:w-35 overflow-hidden rounded-xl">
+    <Image
+      src={Logo}
+      alt="Dream Job Logo"
+      fill
+      className="object-cover"
+      priority
+    />
+  </div>
+</Link>
 
           {/* Desktop Nav */}
           <div className="hidden xl:flex items-center gap-8">

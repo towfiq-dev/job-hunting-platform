@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@heroui/react";
 import ctaBg from "@/assets/images/cta-bg.png";
+import Link from "next/link";
 const NextRole = ()=> {
   return (
     <section className="relative w-full min-h-[600px] sm:min-h-[700px] bg-black text-white flex flex-col justify-center items-center overflow-hidden px-4 py-20">
@@ -29,18 +30,22 @@ const NextRole = ()=> {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-6 sm:px-0">
+          <Link href={'/auth/signup'}  >
           <Button 
             className="bg-white text-black font-semibold px-8 py-6 rounded-xl text-sm transition-all hover:bg-neutral-200 shadow-lg shadow-white/5"
           >
             Create a free account
           </Button>
+          </Link>
 
+          <Link href={'/allRoute/pricing'}>
           <Button 
             variant="bordered"
             className="bg-[#121214]/40 border-neutral-800 text-neutral-300 font-medium px-8 py-6 rounded-xl text-sm hover:bg-neutral-900/80 hover:text-white transition-all backdrop-blur-sm"
           >
             View pricing
           </Button>
+          </Link>
         </div>
       </div>
     </section>

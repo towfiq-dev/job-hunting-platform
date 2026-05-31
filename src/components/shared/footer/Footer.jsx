@@ -3,6 +3,8 @@ import Link from "next/link";
 import { FaFacebook } from "react-icons/fa";
 import { Radio } from "lucide-react";
 import { LiaLinkedin } from "react-icons/lia";
+import Image from "next/image";
+import Logo from "@/assets/images/dream.png";
 
 export default function Footer() {
   return (
@@ -12,15 +14,15 @@ export default function Footer() {
         {/* Left Side: Brand Info */}
         <div className="flex flex-col gap-4 max-w-sm">
           {/* Logo Section */}
-          <div className="flex items-center gap-3">
-            {/* Programming Hero Logo (Purple Icon Placeholder) */}
-            <div className="w-9 h-9 bg-gradient-to-tr from-violet-600 to-fuchsia-500 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-purple-500/20">
-              P
+          <div className="relative h-13 w-40 overflow-hidden rounded-xl">
+              <Image
+                src={Logo}
+                alt="Dream Job Logo"
+                fill
+                className="object-cover"
+                priority
+              />
             </div>
-            <span className="text-white font-semibold text-xl tracking-tight">
-              Programming<span className="block text-sm font-normal text-zinc-400 -mt-1">Hero</span>
-            </span>
-          </div>
           
           {/* Description */}
           <p className="text-sm leading-relaxed text-zinc-400 mt-2">
