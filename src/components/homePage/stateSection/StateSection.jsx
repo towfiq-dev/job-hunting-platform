@@ -1,97 +1,79 @@
-"use client";
+import React from "react";
+import { Card } from "@heroui/react";
+import { Briefcase, Building2, Users, Star } from "lucide-react";
+import statsBg from "@/assets/images/globe.png";
 
-import {
-    Briefcase,
-    Factory,
-    Magnifier,
-    Star,
-} from "@gravity-ui/icons";
-import { motion } from "motion/react"
-export default function StatsSection() {
-    const stats = [
-        {
-            id: 1,
-            icon: <Briefcase className="h-5 w-5" />,
-            value: "50K",
-            label: "Active Jobs",
-        },
-        {
-            id: 2,
-            icon: <Factory className="h-5 w-5" />,
-            value: "12K",
-            label: "Companies",
-        },
-        {
-            id: 3,
-            icon: <Magnifier className="h-5 w-5" />,
-            value: "2M",
-            label: "Job Seekers",
-        },
-        {
-            id: 4,
-            icon: <Star className="h-5 w-5" />,
-            value: "97%",
-            label: "Satisfaction Rate",
-        },
-    ];
+const statsData = [
+  {
+    icon: <Briefcase className="w-5 h-5 text-indigo-400" />,
+    number: "50K",
+    label: "Active Jobs",
+  },
+  {
+    icon: <Building2 className="w-5 h-5 text-indigo-400" />,
+    number: "12K",
+    label: "Companies",
+  },
+  {
+    icon: <Users className="w-5 h-5 text-indigo-400" />,
+    number: "2M",
+    label: "Job Seekers",
+  },
+  {
+    icon: <Star className="w-5 h-5 text-indigo-400" />,
+    number: "97%",
+    label: "Satisfaction Rate",
+  },
+];
 
-    return (
-        <section className="relative overflow-hidden bg-black py-28 text-white">
-            {/* Background Globe */}
-            <div
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-90"
-                style={{
-                    backgroundImage: "url('/images/globe.png')",
-                }}
-            />
+export default function JobStats() {
+  return (
+    <section className="relative w-full min-h-[750px] bg-black text-white flex flex-col justify-between items-center overflow-hidden pt-32 px-4 sm:px-8">
+    
+    <div 
+  className="absolute inset-x-0 -bottom-50 top-15 bg-bottom bg-no-repeat bg-contain opacity-40 pointer-events-none z-0 mix-blend-screen select-none transform scale-[2] origin-bottom transition-all duration-700"
+  style={{
+    backgroundImage: `url(${statsBg.src})`,
+    maskImage: "linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)",
+    WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)"
+  }}
+/>
 
-            {/* Dark Overlay */}
-            <div className="absolute inset-0 bg-black/40" />
+      <div 
+        className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-[320px] sm:w-[650px] h-[320px] bg-indigo-600/20 rounded-full blur-[120px] sm:blur-[160px] pointer-events-none z-0"
+      />
 
-            {/* Glow Effect */}
-            <div className="absolute left-1/2 top-[25%] h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-violet-600/30 blur-[140px]" />
+      <div className="relative z-20 max-w-4xl w-full text-center mb-8 sm:mb-16">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-200 leading-[1.25] max-w-3xl mx-auto px-2">
+          Assisting over <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 font-extrabold">15,000 job seekers</span> <br className="hidden sm:inline" /> find their dream positions.
+        </h2>
+      </div>
 
-            {/* Content */}
-            <div className="relative z-10 mx-auto max-w-7xl px-6">
-                {/* Heading */}
-                <div className="mx-auto max-w-3xl text-center">
-                    <h2 className="text-2xl font-medium leading-relaxed text-white/90">
-                        Assisting over 15,000 job seekers
-                        <br />
-                        find their dream positions.
-                    </h2>
-                    <motion.p animate={{ rotate: -45 }}>Remote Jobs</motion.p>
-                    <motion.p initial={{ scale: 0 }} animate={{ scale: 1 }}>On-site Jobs</motion.p>
-                </div>
+      <div className="relative z-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 max-w-6xl w-full mt-auto pb-12">
+        {statsData.map((stat, index) => (
+          <Card 
+            key={index} 
+            className="group bg-[#0B0B0F]/80 border border-neutral-900/90 backdrop-blur-xl rounded-2xl p-6 min-h-[190px] sm:min-h-[210px] flex flex-col justify-between shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-indigo-500/40 hover:shadow-indigo-500/5"
+          >
+            <div className="p-0 flex flex-col justify-between h-full">
 
-                {/* Stats Cards */}
-                <div className="mt-20 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-                    {stats.map((stat) => (
-                        <div
-                            key={stat.id}
-                            className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl transition duration-300 hover:border-violet-500/30"
-                        >
-                            {/* Card Glow */}
-                            <div className="absolute bottom-0 right-0 h-32 w-32 rounded-full bg-white/10 blur-3xl transition duration-300 group-hover:bg-violet-500/20" />
-
-                            {/* Icon */}
-                            <div className="relative z-10 text-white/90">
-                                {stat.icon}
-                            </div>
-
-                            {/* Number */}
-                            <h3 className="relative z-10 mt-10 text-5xl font-bold tracking-tight">
-                                {stat.value}
-                            </h3>
-
-                            {/* Label */}
-                            <p className="relative z-10 mt-4 text-base text-gray-300">
-                                {stat.label}
-                            </p>
-                        </div>
-                    ))}
-                </div>
+              <div className="w-10 h-10 rounded-xl bg-neutral-900/60 border border-neutral-800/80 flex items-center justify-center text-neutral-400 transition-all duration-300 group-hover:bg-indigo-950/40 group-hover:border-indigo-500/40 group-hover:text-indigo-400">
+                {stat.icon}
+              </div>
+              
+              <div className="mt-6">
+                <h3 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white mb-2 transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-neutral-400">
+                  {stat.number}
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-500 font-medium tracking-wide transition-colors duration-300 group-hover:text-neutral-400">
+                  {stat.label}
+                </p>
+              </div>
             </div>
-        </section>
-    );
+          </Card>
+        ))}
+      </div>
+
+    </section>
+  );
 }
