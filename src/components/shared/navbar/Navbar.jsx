@@ -7,6 +7,7 @@ import { Button } from "@heroui/react";
 import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
 
 const navLinks = [
   {
@@ -38,6 +39,7 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     await authClient.signOut();
+    toast.success('You are successfully SignOut')
   };
 
   return (
@@ -120,7 +122,7 @@ const Navbar = () => {
                       {user?.name}
                     </p>
 
-                    <p className="truncate text-xs text-gray-400">
+                    <p className="truncate text-xs text-white font-semibold">
                       {user?.email}
                     </p>
                   </div>
@@ -228,7 +230,7 @@ const Navbar = () => {
                     {user?.name}
                   </p>
 
-                  <p className="truncate text-sm text-gray-400">
+                  <p className="truncate text-sm text-white font-semibold">
                     {user?.email}
                   </p>
                 </div>
