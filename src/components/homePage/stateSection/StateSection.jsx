@@ -26,7 +26,7 @@ const statsData = [
   },
 ];
 
-export default function JobStats() {
+const JobStats = ()=> {
   return (
     <section className="relative w-full min-h-[750px] bg-black text-white flex flex-col justify-between items-center overflow-hidden pt-32 px-4 sm:px-8">
     
@@ -77,3 +77,5 @@ export default function JobStats() {
     </section>
   );
 }
+
+export default JobStats;
