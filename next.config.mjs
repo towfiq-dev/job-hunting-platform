@@ -1,7 +1,8 @@
 /** @type {import('next').Next} */
 const nextConfig = {
-    experimental: {
-    serverComponentsExternalPackages: ['@better-auth/kysely-adapter'],
+  output: 'standalone',
+  experimental: {
+    serverComponentsExternalPackages: ['@better-auth/kysely-adapter', 'kysely'],
   },
   images: {
     remotePatterns: [
