@@ -9,9 +9,11 @@ import { useForm } from 'react-hook-form';
 import { authClient } from '@/lib/auth-client';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import { Label, Radio, RadioGroup } from '@heroui/react';
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState('jobSeeker')
   const router = useRouter()
   const {
     register,
@@ -26,6 +28,7 @@ const SignUpPage = () => {
     email: email, 
     password: password,
     image: url,
+    role
 });
 
   if (res) {
@@ -162,6 +165,34 @@ const SignUpPage = () => {
                   </span>
                 </div>
                 {errors.password && <span className='text-red-500'>This field is required</span>}
+              </div>
+
+              {/* role */}
+              <div className="flex flex-col gap-4">
+      <RadioGroup 
+      defaultValue="jobSeeker" 
+      name="role" 
+      orientation="horizontal"
+      onChange={value=>setRole(value)}
+      >
+        <Label>Subscription plan</Label>
+        <Radio value="jobSeeker">
+          <Radio.Control>
+            <Radio.Indicator />
+          </Radio.Control>
+          <Radio.Content>
+            <Label>Job Seeker</Label>
+          </Radio.Content>
+        </Radio>
+        <Radio value="recruiter">
+          <Radio.Control>
+            <Radio.Indicator />
+          </Radio.Control>
+          <Radio.Content>
+            <Label>Recruiter</Label>
+          </Radio.Content>
+        </Radio>
+      </RadioGroup>
               </div>
 
               {/* Terms */}

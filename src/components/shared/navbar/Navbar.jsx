@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@heroui/react";
 import { Menu, X } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 import Logo from "@/assets/images/dream.png";
@@ -26,9 +26,14 @@ const navLinks = [
     name: "Pricing",
     href: "/allRoute/pricing",
   },
+  {
+    name: "Pricing",
+    href: "/allRoute/pricing",
+  },
 ];
 
 const Navbar = () => {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false);
 
   const pathname = usePathname();
@@ -40,6 +45,7 @@ const Navbar = () => {
   const handleSignOut = async () => {
     await authClient.signOut();
     toast.success('You are successfully SignOut')
+    router.push('/auth/signin')
   };
 
   return (
