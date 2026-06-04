@@ -1,5 +1,6 @@
 'use client'
 import DashboardState from '@/components/allRoute/dashboard/dashboardState/DashboardState';
+import RecentApplication from '@/components/allRoute/dashboard/recentApplication/RecentApplication';
 import { useSession } from '@/lib/auth-client';
 import React from 'react';
 
@@ -17,7 +18,7 @@ const DashboardRecruiterPage = () => {
   }
 
   return (
-    <div className="min-h-screen p-6 md:p-10 text-slate-100 bg-[#0B0F19]">
+    <div className="min-h-screen text-slate-100 bg-[#0B0F19]">
       {/* Header Section */}
       <div className="mb-8">
         <h1 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
@@ -30,6 +31,9 @@ const DashboardRecruiterPage = () => {
 
       {/* Grid Container for Separate Cards */}
       <DashboardState/>
+
+      {/* Recent Application */}
+      <RecentApplication/>
     </div>
   );
 };
