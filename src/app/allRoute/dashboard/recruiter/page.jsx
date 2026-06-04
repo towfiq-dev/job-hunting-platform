@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DashboardRecruiterPage = () => {
+const DashboardRecruiterHomePage = () => {
   return (
     <div>
       DashboardRecruiterPage
@@ -8,4 +8,4 @@ const DashboardRecruiterPage = () => {
   );
 };
 
-export default DashboardRecruiterPage;
+export default DashboardRecruiterHomePage;

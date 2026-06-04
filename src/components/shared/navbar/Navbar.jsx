@@ -27,8 +27,8 @@ const navLinks = [
     href: "/allRoute/pricing",
   },
   {
-    name: "Pricing",
-    href: "/allRoute/pricing",
+    name: "Dashboard",
+    href: "/allRoute/dashboard/recruiter",
   },
 ];
 
