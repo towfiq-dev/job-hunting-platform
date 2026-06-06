@@ -14,9 +14,9 @@ import {
   Button
 } from "@heroui/react";
 import { Globe } from "@gravity-ui/icons";
-import { createJobs } from '@/lib/actions/jobs';
 import { toast } from 'react-toastify';
 import { redirect } from 'next/navigation';
+import { createJob } from '@/lib/actions/jobs';
 
 const DashboardForm = ({ mockCompany }) => {
 
@@ -60,7 +60,7 @@ const DashboardForm = ({ mockCompany }) => {
       isPubliclyVisible: true,
     };
 
-    const res = await createJobs(payload)
+    const res = await createJob(payload)
     if (res.insertedId) {
       toast.success('Your job post successfully')
       e.target.reset()
