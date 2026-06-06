@@ -18,15 +18,16 @@ import { toast } from 'react-toastify';
 import { redirect } from 'next/navigation';
 import { createJob } from '@/lib/actions/jobs';
 
-const DashboardForm = ({ mockCompany }) => {
-
+const DashboardForm = ({company }) => {
+  console.log('post a job', company);
+  
   const [isRemote, setIsRemote] = useState(false);
   const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!mockCompany.isApproved) {
+    if (!company.isApproved) {
       alert("Your company profile must be approved before you can post jobs.");
       return;
     }
@@ -55,7 +56,7 @@ const DashboardForm = ({ mockCompany }) => {
     const payload = {
       ...data,
       isRemote,
-      companyId: mockCompany.id,
+      companyId: company.id,
       status: "active",
       isPubliclyVisible: true,
     };

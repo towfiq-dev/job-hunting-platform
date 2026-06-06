@@ -12,7 +12,7 @@ import DashboardForm from "@/components/allRoute/dashboard/dashboardForm/Dashboa
 // } from "lucide-react";
 // import { toast } from "react-toastify";
 
-const NewJobsPage = () => {
+const NewJobsPage = ({company}) => {
   // const handleSubmit = async(e) => {
   //   e.preventDefault();
 
@@ -189,11 +189,11 @@ const NewJobsPage = () => {
   //   </section>
   // );
   // Mock configuration for recruiter's authenticated state
-  const [mockCompany] = useState({
-    name: "Acme Corp (Auto-filled)",
-    id: "company_123",
-    isApproved: true,
-  });
+  // const [mockCompany] = useState({
+  //   name: "Acme Corp (Auto-filled)",
+  //   id: "company_123",
+  //   isApproved: true,
+  // });
 
   return (
     <div className="min-h-screen bg-[#0d0d0e] text-white py-12 px-4 sm:px-6 lg:px-8">
@@ -215,7 +215,9 @@ const NewJobsPage = () => {
         </div>
 
         {/* Hero UI Main Form Handler */}
-        <DashboardForm mockCompany={mockCompany}/>
+        <DashboardForm 
+        //mockCompany={mockCompany} 
+        company={company}/>
       </div>
     </div>
   );
