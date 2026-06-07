@@ -14,13 +14,15 @@
 // };
 
 // export default DashboardJobsPage;
+import { getLoggedInRecruiterCompany } from '@/lib/api/companies';
 import { getCompanyJobs } from '@/lib/api/jobs';
 import React from 'react';
 import { FaEye, FaPen, FaTrashAlt, FaBriefcase, FaMapMarkerAlt } from 'react-icons/fa';
 
 const DashboardJobsPage = async () => {
-  const companyId = 'company_123';
-  const jobs = await getCompanyJobs(companyId);
+  //const companyId = 'company_123';
+  const company = await getLoggedInRecruiterCompany()
+  const jobs = await getCompanyJobs(company._id) ;
 
   // Fallback if jobs is empty or undefined
   const jobList = jobs || [];

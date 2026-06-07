@@ -27,10 +27,10 @@ const DashboardForm = ({company }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!company.isApproved) {
-      alert("Your company profile must be approved before you can post jobs.");
-      return;
-    }
+    // if (!company.isApproved) {
+    //   alert("Your company profile must be approved before you can post jobs.");
+    //   return;
+    // }
 
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
@@ -56,7 +56,9 @@ const DashboardForm = ({company }) => {
     const payload = {
       ...data,
       isRemote,
-      companyId: company.id,
+      companyId: company._id,
+      companyName: company.name,
+      companyLogo: company.logo,
       status: "active",
       isPubliclyVisible: true,
     };
