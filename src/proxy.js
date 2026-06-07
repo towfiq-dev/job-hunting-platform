@@ -13,5 +13,5 @@ export async function proxy(request) {
 }
 
 export const config = {
-    matcher: ['/allRoute/browseJobs', '/allRoute/browseJobs/:path', '/allRoute/company', '/allRoute/pricing']
+    matcher: ['/allRoute/dashboard/recruiter']
 }

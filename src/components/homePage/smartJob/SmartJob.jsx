@@ -42,7 +42,10 @@ const SmartJob = ({job}) => {
                 </span>
               </div>
 
-              <Link href={`/allRoute/browseJobs/${job.id}`}>
+              <Link 
+              href={`/allRoute/browseJobs/${job._id}`}
+              
+              >
               <button className="w-full cursor-pointer bg-[#0A0A0C] flex items-center justify-center gap-2 text-sm font-semibold text-neutral-400 border border-neutral-900 rounded-xl py-3 px-4 transition-all duration-300 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-500 group-hover:shadow-lg group-hover:shadow-indigo-600/20">
                 <span>Apply Now</span>
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />

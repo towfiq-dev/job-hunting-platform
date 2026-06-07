@@ -49,7 +49,7 @@ const SignUpPage = () => {
     <div className="min-h-screen md:mt-25 flex justify-center items-center px-4 py-10">
       <div className="w-full max-w-[620px]">
 
-        <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
+        <div className="rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
 
           <div className="bg-gradient-to-r from-cyan-500 to-blue-500 px-8 py-10 text-center">
             <h2 className="text-4xl font-bold text-white">Create Account</h2>
@@ -76,7 +76,7 @@ const SignUpPage = () => {
                   <input
                     type="text"
                     placeholder="Enter your full name"
-                    className={'w-full bg-gray-50 border rounded-2xl py-4 pl-12 pr-4 outline-none transition-all focus:ring-4'}
+                    className={'w-full border rounded-2xl py-4 pl-12 pr-4 outline-none transition-all focus:ring-4'}
                     {...register("name", { required: true })}
                   />
                 </div>
@@ -96,7 +96,7 @@ const SignUpPage = () => {
                   <input
                     type="text"
                     placeholder="Enter your photo URL"
-                    className={'w-full bg-gray-50 border rounded-2xl py-4 pl-12 pr-4 outline-none transition-all focus:ring-4'}
+                    className={'w-full border rounded-2xl py-4 pl-12 pr-4 outline-none transition-all focus:ring-4'}
                     {...register("url", { required: true })}
                   />
                 </div>
@@ -116,7 +116,7 @@ const SignUpPage = () => {
                   <input
                     type="email"
                     placeholder="Enter your email address"
-                    className={'w-full bg-gray-50 border rounded-2xl py-4 pl-12 pr-4 outline-none transition-all focus:ring-4'}
+                    className={'w-full border rounded-2xl py-4 pl-12 pr-4 outline-none transition-all focus:ring-4'}
                     {...register("email", { required: true })}
                   />
                 </div>
@@ -155,7 +155,7 @@ const SignUpPage = () => {
                     //   },
                     // })}
                     {...register("password", { required: true })}
-                    className={'w-full bg-gray-50 border rounded-2xl py-4 pl-12 pr-12 outline-none transition-all focus:ring-4'}
+                    className={'w-full border rounded-2xl py-4 pl-12 pr-12 outline-none transition-all focus:ring-4'}
                   />
                   <span
                     onClick={() => setShowPassword(!showPassword)}

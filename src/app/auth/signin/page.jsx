@@ -7,10 +7,13 @@ import { Mail, Lock } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { authClient } from '@/lib/auth-client';
 import { toast } from 'react-toastify';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const searchParams = useSearchParams()
+  const redirectTo = searchParams.get('redirect') || '/'
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -22,11 +25,12 @@ const SignInPage = () => {
     const { data:res, error } = await authClient.signIn.email({
       email: email, 
       password: password,
-      callbackURL: "/"
+      //callbackURL: "/"
   });
   
     if (res) {
       toast.success('You are successfully Signup')
+      router.push(redirectTo)
     }else if (error){
       toast.error('Something went wrong')
     }
@@ -42,7 +46,7 @@ const googleSignIn = async () => {
     <div className="min-h-screen mt-25 flex justify-center items-center px-4 py-10">
       <div className="w-full max-w-[620px]">
         {/* Card */}
-        <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
+        <div className="rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
           {/* Top Banner */}
           <div className="bg-gradient-to-r from-cyan-500 to-blue-500 px-8 py-10 text-center">
             <h2 className="text-4xl font-bold text-white">Welcome Back</h2>
@@ -69,7 +73,7 @@ const googleSignIn = async () => {
                   <input
                     type="email"
                     placeholder="Enter your email address"
-                    className={'w-full bg-gray-50 border rounded-2xl py-4 pl-12 pr-4 outline-none transition-all focus:ring-4'}
+                    className={'w-full border rounded-2xl py-4 pl-12 pr-4 outline-none transition-all focus:ring-4'}
                     {...register("email", { required: true })}
                   />
                 </div>
@@ -107,7 +111,7 @@ const googleSignIn = async () => {
                     //       'Password must contain at least one number.',
                     //   },
                     // })}
-                    className={'w-full bg-gray-50 border rounded-2xl py-4 pl-12 pr-12 outline-none transition-all focus:ring-4'}
+                    className={'w-full border rounded-2xl py-4 pl-12 pr-12 outline-none transition-all focus:ring-4'}
                     {...register("password", { required: true })}
                   />
                   <span
