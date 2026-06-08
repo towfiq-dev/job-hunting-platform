@@ -20,7 +20,7 @@ const SignUpPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm()
-
+  const plan = role === 'jobSeeker' ? 'seeker_free' : 'recruiter_free'
   const onSubmit = async(data) => {
   const {name, url, email, password} = data
   const { data:res, error } = await authClient.signUp.email({
@@ -28,7 +28,8 @@ const SignUpPage = () => {
     email: email, 
     password: password,
     image: url,
-    role
+    role,
+    plan
 });
 
   if (res) {
@@ -173,7 +174,8 @@ const SignUpPage = () => {
       defaultValue="jobSeeker" 
       name="role" 
       orientation="horizontal"
-      onChange={value=>setRole(value)}
+      //onValueChange={value=>setRole(value)}
+      onValueChange={(value) => setRole(value)}
       >
         <Label>Subscription plan</Label>
         <Radio value="jobSeeker">
