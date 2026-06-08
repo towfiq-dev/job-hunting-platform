@@ -5,6 +5,8 @@ import { Form, Button, TextField, Label, Input, Description, FieldError } from '
 // Gravity UI Icons for a polished look
 import { ArrowRight, Link, FileText, LayoutHeaderCells } from '@gravity-ui/icons';
 import { submitApplication } from '@/lib/actions/applications';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 const JobApply = ({ job, applicant }) => {
     const [formData, setFormData] = useState({
@@ -12,6 +14,8 @@ const JobApply = ({ job, applicant }) => {
         portfolioLink: '',
         additionalNotes: ''
     });
+
+    const router = useRouter()
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -39,8 +43,10 @@ const JobApply = ({ job, applicant }) => {
         // Handle your API submission here
         const res = await submitApplication(submissionData);
         if (res.insertedId) {
-            alert('Application submitted successfully!');
+            toast.success('Application submitted successfully!');
+
             setFormData({ resumeLink: '', portfolioLink: '', additionalNotes: '' });
+            router.refresh()
         }
     };
 
