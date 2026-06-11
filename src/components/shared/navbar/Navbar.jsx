@@ -9,6 +9,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 import Logo from "@/assets/images/dream.png";
+
 const navLinks = [
   {
     name: "Home",
@@ -26,27 +27,42 @@ const navLinks = [
     name: "Pricing",
     href: "/allRoute/pricing",
   },
-  {
-    name: "Dashboard",
-    href: "/allRoute/dashboard/recruiter",
-  },
 ];
 
 const Navbar = () => {
-  const router = useRouter()
-  const [isOpen, setIsOpen] = useState(false);
-
+  const router = useRouter();
   const pathname = usePathname();
 
-  const { data: session } = authClient.useSession();
+  const [isOpen, setIsOpen] = useState(false);
 
+  const { data: session } = authClient.useSession();
   const user = session?.user;
 
   const handleSignOut = async () => {
     await authClient.signOut();
-    toast.success('You are successfully SignOut')
-    router.push('/auth/signin')
+    toast.success("You are successfully Sign Out");
+    router.push("/auth/signin");
   };
+
+  const dashboardLinks = {
+    seeker: "/allRoute/dashboard/seeker",
+    recruiter: "/allRoute/dashboard/recruiter",
+  };
+
+  const dashboardHref =
+    dashboardLinks[user?.role] || dashboardLinks.seeker;
+
+  const menuItems = [
+    ...navLinks,
+    ...(user?.email
+      ? [
+          {
+            name: "Dashboard",
+            href: dashboardHref,
+          },
+        ]
+      : []),
+  ];
 
   return (
     <header className="sticky top-0 z-50 w-full px-3 sm:px-4 md:px-6 lg:px-8 py-3">
@@ -64,27 +80,26 @@ const Navbar = () => {
           "
         >
           {/* Logo */}
-<Link
-  href="/"
-  className="flex items-center gap-3 shrink-0"
->
-  {/* Logo */}
-  <div className="relative h-10 w-30 md:h-12 md:w-35 overflow-hidden rounded-xl">
-    <Image
-      src={Logo}
-      alt="Dream Job Logo"
-      fill
-      className="object-cover"
-      priority
-    />
-  </div>
-</Link>
+          <Link
+            href="/"
+            className="flex items-center gap-3 shrink-0"
+          >
+            <div className="relative h-10 w-30 md:h-12 md:w-35 overflow-hidden rounded-xl">
+              <Image
+                src={Logo}
+                alt="Dream Job Logo"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          </Link>
 
           {/* Desktop Nav */}
           <div className="hidden xl:flex items-center gap-8">
-            {navLinks.map((item) => (
+            {menuItems.map((item) => (
               <Link
-                key={item.name}
+                key={item.href}
                 href={item.href}
                 className={`text-sm font-medium transition-all duration-300 ${
                   pathname === item.href
@@ -208,7 +223,6 @@ const Navbar = () => {
               p-5
             "
           >
-            {/* User Info */}
             {user && (
               <div className="mb-5 flex items-center gap-3 border-b border-white/10 pb-5">
                 <Image
@@ -231,11 +245,11 @@ const Navbar = () => {
               </div>
             )}
 
-            {/* Nav Links */}
+            {/* Mobile Nav Links */}
             <div className="flex flex-col gap-4">
-              {navLinks.map((item) => (
+              {menuItems.map((item) => (
                 <Link
-                  key={item.name}
+                  key={item.href}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
                   className={`font-medium transition ${

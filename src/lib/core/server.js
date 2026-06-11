@@ -1,8 +1,31 @@
+// const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL
+
+// export const serverFetch = async (path) => {
+//     const res = await fetch(`${baseUrl}${path}`);
+//     // handle 401, 404, 403
+//     return res.json();
+// }
+
+// export const serverMutation = async (path, data) => {
+//     const res = await fetch(`${baseUrl}${path}`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(data),
+//     });
+
+//     // handle 401, 404, 403
+
+//     return res.json();
+// }
+
 const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL
 
 export const serverFetch = async (path) => {
-    const res = await fetch(`${baseUrl}${path}`);
-    // handle 401, 404, 403
+    const res = await fetch(`${baseUrl}${path}`, {
+        cache: 'no-store'
+    });
     return res.json();
 }
 
@@ -14,8 +37,6 @@ export const serverMutation = async (path, data) => {
         },
         body: JSON.stringify(data),
     });
-
-    // handle 401, 404, 403
 
     return res.json();
 }
